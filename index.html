@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>relay � Temporary Access Marketplace</title>
+    <meta
+      name="description"
+      content="relay helps people access what they need, for as long as they need it."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="topbar-inner container">
+          <div class="brand-wrap">
+            <div class="brand-mark" aria-hidden="true">
+              <span class="brand-mark__dot"></span>
+              <span class="brand-mark__line"></span>
+            </div>
+            <div class="brand-word">relay</div>
+          </div>
+
+          <nav class="desktop-nav" aria-label="Primary navigation">
+            <button class="nav-link active" data-target="home-screen">Explore</button>
+            <button class="nav-link" data-target="activity-screen">Activity</button>
+            <button class="nav-link" data-target="profile-screen">Profile</button>
+          </nav>
+
+          <div class="header-actions">
+            <button class="notification-button" data-target="notifications-screen" type="button" aria-label="Notifications">
+              <span>??</span>
+              <span class="notification-badge" id="notification-badge">1</span>
+            </button>
+            <button class="secondary-button compact login-button" data-target="login-screen">Log in</button>
+            <button class="primary-action compact" data-target="list-screen">List something</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="app container" id="app">
+        <section class="screen active" id="home-screen" aria-label="Home screen">
+          <div class="header-row">
+            <div>
+              <p class="eyebrow">relay</p>
+              <h1>What do you need?</h1>
+            </div>
+            <button class="avatar-button" aria-label="Profile" data-target="profile-screen">
+              <img
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+                alt="Profile of Rahul"
+              />
+            </button>
+          </div>
+
+          <label class="search-wrap" aria-label="Search anything">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 015.92 12.7l4.38 4.38 1.41-1.41-4.38-4.38A7.5 7.5 0 1110.5 3zm0 2a5.5 5.5 0 100 11 5.5 5.5 0 000-11z"/></svg>
+            <input id="home-search" type="search" placeholder="Search cameras, projectors, tools..." />
+          </label>
+
+          <div class="section-block">
+            <div class="section-label-row">
+              <h2>Browse</h2>
+            </div>
+            <div class="category-row" id="home-categories"></div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-label-row">
+              <h2>Available near you</h2>
+            </div>
+            <div class="listing-grid" id="home-listings"></div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-label-row">
+              <h2>Saved searches</h2>
+            </div>
+            <div id="saved-searches" class="saved-search-list"></div>
+          </div>
+
+          <div class="need-cta">
+            <div>
+              <h3>Can't find what you need?</h3>
+              <p>Tell people nearby what you're looking for.</p>
+            </div>
+            <button class="secondary-button" data-target="need-screen">Post a need</button>
+          </div>
+        </section>
+
+        <section class="screen" id="explore-screen" aria-label="Explore screen">
+          <div class="page-title-row">
+            <h1>Explore</h1>
+          </div>
+
+          <label class="search-wrap" aria-label="Search items">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 015.92 12.7l4.38 4.38 1.41-1.41-4.38-4.38A7.5 7.5 0 1110.5 3zm0 2a5.5 5.5 0 100 11 5.5 5.5 0 000-11z"/></svg>
+            <input id="explore-search" type="search" placeholder="Search items" />
+          </label>
+
+          <div class="section-block compact">
+            <div class="category-row" id="explore-categories"></div>
+          </div>
+
+          <div class="result-toolbar">
+            <p id="results-count">12 items</p>
+            <button class="link-button" id="save-search-button" type="button">Save search</button>
+          </div>
+
+          <div class="list-stack" id="explore-results"></div>
+        </section>
+
+        <section class="screen" id="detail-screen" aria-label="Item detail screen">
+          <div class="detail-topbar">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <button class="icon-button" id="detail-save-button" data-favorite="true" aria-label="Save item">?</button>
+          </div>
+
+          <div class="detail-gallery" id="detail-gallery"></div>
+
+          <div class="detail-content" id="detail-content"></div>
+
+          <div class="sticky-cta">
+            <div class="sticky-cta__price">
+              <span id="detail-action-price">?300/day</span>
+            </div>
+            <button class="primary-action full" id="detail-request-button" data-target="borrow-screen">Request to borrow</button>
+          </div>
+        </section>
+
+        <section class="screen" id="borrow-screen" aria-label="Borrow request screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>Request to borrow</h1>
+          </div>
+
+          <div class="request-item card-surface">
+            <img id="borrow-image" src="" alt="Selected item" />
+            <div>
+              <h3 id="borrow-title">Canon EOS 1500D</h3>
+              <p id="borrow-meta">?300 / day � Salem</p>
+            </div>
+          </div>
+
+          <form class="form-stack" id="borrow-form">
+            <label>
+              <span>Start date</span>
+              <input type="date" name="startDate" value="2026-09-28" />
+            </label>
+            <label>
+              <span>Return date</span>
+              <input type="date" name="returnDate" value="2026-09-30" />
+            </label>
+            <div class="summary-row">
+              <span>Duration</span>
+              <strong id="borrow-duration">2 days</strong>
+            </div>
+            <div class="summary-row">
+              <span>Estimated cost</span>
+              <strong id="borrow-total">?600</strong>
+            </div>
+            <div class="summary-row">
+              <span>Deposit</span>
+              <strong id="borrow-deposit">?1000</strong>
+            </div>
+            <label>
+              <span>Pickup location</span>
+              <input type="text" value="Salem" />
+            </label>
+            <button class="primary-action full" type="submit">Send request</button>
+          </form>
+
+          <div class="success-card hidden" id="borrow-success">
+            <p class="success-mark">?</p>
+            <h2>Request sent</h2>
+            <p>The owner will review your request.</p>
+            <button class="primary-action full" data-target="home-screen">Back to home</button>
+          </div>
+        </section>
+
+        <section class="screen" id="need-screen" aria-label="Need request screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>Need something?</h1>
+          </div>
+
+          <p class="subtext">Can't find what you're looking for? Tell people nearby.</p>
+
+          <form class="form-stack" id="need-form">
+            <label>
+              <span>What do you need?</span>
+              <input type="text" name="itemName" value="Projector" />
+            </label>
+            <label>
+              <span>Category</span>
+              <select name="category">
+                <option>Electronics</option>
+                <option>Photography</option>
+                <option>Study</option>
+                <option>Events</option>
+                <option>Tools</option>
+                <option>Travel</option>
+              </select>
+            </label>
+            <label>
+              <span>When do you need it?</span>
+              <input type="date" name="requiredDate" value="2026-10-04" />
+            </label>
+            <label>
+              <span>For how long?</span>
+              <input type="text" name="duration" value="2 days" />
+            </label>
+            <label>
+              <span>Where?</span>
+              <input type="text" name="location" value="Salem" />
+            </label>
+            <label>
+              <span>Optional budget</span>
+              <input type="text" name="budget" value="?500" />
+            </label>
+            <label>
+              <span>Optional note</span>
+              <textarea rows="4" name="note">Need it for a college presentation.</textarea>
+            </label>
+            <button class="primary-action full" type="submit">Post request</button>
+          </form>
+
+          <div class="success-card hidden" id="need-success">
+            <p class="success-mark">?</p>
+            <h2>Your need is live.</h2>
+            <p>We'll notify you when a matching item becomes available.</p>
+            <button class="primary-action full" data-target="home-screen">Back to home</button>
+          </div>
+        </section>
+
+        <section class="screen" id="list-screen" aria-label="List item screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>List something</h1>
+          </div>
+
+          <form class="form-stack" id="list-form">
+            <div class="upload-box">
+              <span>+ Add photos</span>
+            </div>
+            <label>
+              <span>Item name</span>
+              <input type="text" value="Canon EOS 1500D" />
+            </label>
+            <label>
+              <span>Category</span>
+              <select>
+                <option>Photography</option>
+                <option>Electronics</option>
+                <option>Study</option>
+                <option>Events</option>
+                <option>Tools</option>
+                <option>Travel</option>
+              </select>
+            </label>
+            <label>
+              <span>Description</span>
+              <textarea rows="4">Great for product shoots, events, and portrait sessions.</textarea>
+            </label>
+            <div class="two-col">
+              <label>
+                <span>Available from</span>
+                <input type="date" value="2026-09-28" />
+              </label>
+              <label>
+                <span>Available until</span>
+                <input type="date" value="2026-10-03" />
+              </label>
+            </div>
+            <div class="two-col">
+              <label>
+                <span>Price per day</span>
+                <input type="text" value="?300/day" />
+              </label>
+              <label>
+                <span>Deposit</span>
+                <input type="text" value="?1000" />
+              </label>
+            </div>
+            <label>
+              <span>Location</span>
+              <input type="text" value="Salem" />
+            </label>
+            <button class="primary-action full" type="submit">Publish listing</button>
+          </form>
+
+          <div class="success-card hidden" id="list-success">
+            <h2>Your listing is live</h2>
+            <div class="mini-listing">
+              <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" alt="Canon EOS 1500D" />
+              <div>
+                <h3>Canon EOS 1500D</h3>
+                <p>?300/day</p>
+                <span>Available</span>
+              </div>
+            </div>
+            <p>Your listing is now visible to people nearby.</p>
+            <div class="stack-button-row">
+              <button class="secondary-button full" data-target="detail-screen">View listing</button>
+              <button class="primary-action full" data-target="home-screen">Done</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="login-screen" aria-label="Login screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>Welcome back</h1>
+          </div>
+
+          <div class="auth-card">
+            <p class="subtext">Access what you need. For as long as you need it.</p>
+
+            <form class="form-stack" id="login-form">
+              <label>
+                <span>Email</span>
+                <input type="email" placeholder="you@example.com" />
+              </label>
+
+              <label>
+                <span>Password</span>
+                <input type="password" placeholder="Enter password" />
+              </label>
+
+              <button class="primary-action full" type="submit">Log in</button>
+              <button class="secondary-button full" type="button" data-target="home-screen">Continue as guest</button>
+
+              <button class="google-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21.7 12.23c0-.73-.06-1.43-.19-2.1H12v3.98h5.39a4.6 4.6 0 0 1-1.98 3.02v2.5h3.21c1.88-1.73 2.96-4.29 2.96-7.4Z" fill="#4285F4"/>
+                  <path d="M12 22c2.7 0 4.96-.89 6.61-2.41l-3.21-2.5c-.89.6-2.03.96-3.4.96-2.62 0-4.84-1.77-5.63-4.15H.8v2.6A10 10 0 0 0 12 22Z" fill="#34A853"/>
+                  <path d="M6.37 19.82A6 6 0 0 1 6 17.2V14.6H2.93A10 10 0 0 0 2 12c0-1.62.39-3.16 1.08-4.5L6.4 10.1A5.96 5.96 0 0 1 6 12c0 .53.05 1.04.15 1.53l.22.69Z" fill="#FBBC05"/>
+                  <path d="M12 3.98c1.47 0 2.79.5 3.83 1.49l2.88-2.88A9.92 9.92 0 0 0 12 2a10 10 0 0 0-9.07 5.5L6.4 10.1A6 6 0 0 1 12 3.98Z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+              </button>
+            </form>
+
+            <div class="auth-divider"><span>or</span></div>
+
+            <p class="auth-footer">
+              New here?
+              <button class="inline-link" type="button" data-target="home-screen">Create account</button>
+            </p>
+          </div>
+        </section>
+
+        <section class="screen" id="activity-screen" aria-label="Activity screen">
+          <div class="page-title-row">
+            <h1>Activity</h1>
+          </div>
+
+          <div class="tabs" role="tablist" aria-label="Activity tabs">
+            <button class="tab-button active" type="button" data-tab="all">All</button>
+            <button class="tab-button" type="button" data-tab="borrowing">Borrowing</button>
+            <button class="tab-button" type="button" data-tab="requests">Requests</button>
+            <button class="tab-button" type="button" data-tab="needs">Needs</button>
+          </div>
+
+          <div class="activity-panel active" data-tab-panel="all" id="activity-all"></div>
+          <div class="activity-panel" data-tab-panel="borrowing" id="activity-borrowing"></div>
+          <div class="activity-panel" data-tab-panel="requests" id="activity-requests"></div>
+          <div class="activity-panel" data-tab-panel="needs" id="activity-needs"></div>
+        </section>
+
+        <section class="screen" id="profile-screen" aria-label="Profile screen">
+          <div class="page-title-row">
+            <h1>You</h1>
+          </div>
+
+          <div class="profile-header card-surface">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+              alt="Rahul"
+            />
+            <div>
+              <h2>Rahul</h2>
+              <p class="verified-line">Verified account</p>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <strong>12</strong>
+              <span>successful borrows</span>
+            </div>
+            <div class="stat-card">
+              <strong>8</strong>
+              <span>items listed</span>
+            </div>
+            <div class="stat-card">
+              <strong>4.9</strong>
+              <span>rating</span>
+            </div>
+          </div>
+
+          <div class="list-stack simple-list">
+            <button class="list-row" type="button" data-target="saved-screen"><span>Saved items</span><span>?</span></button>
+            <button class="list-row" type="button" data-target="notifications-screen"><span>Notifications</span><span>?</span></button>
+            <button class="list-row" type="button" data-target="activity-screen"><span>Borrowing history</span><span>?</span></button>
+            <button class="list-row" type="button" data-target="need-screen"><span>Need requests</span><span>?</span></button>
+            <button class="list-row" type="button" data-target="list-screen"><span>List something</span><span>?</span></button>
+            <button class="list-row" type="button" data-target="home-screen"><span>Settings</span><span>?</span></button>
+          </div>
+        </section>
+
+        <section class="screen" id="saved-screen" aria-label="Saved items screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>Saved</h1>
+          </div>
+          <div id="saved-items-list" class="list-stack"></div>
+        </section>
+
+        <section class="screen" id="notifications-screen" aria-label="Notifications screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>Notifications</h1>
+          </div>
+          <div id="notifications-list" class="list-stack"></div>
+        </section>
+
+        <section class="screen" id="transaction-screen" aria-label="Transaction detail screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>Transaction</h1>
+          </div>
+          <div id="transaction-details" class="transaction-stack"></div>
+        </section>
+
+        <section class="screen" id="return-screen" aria-label="Return item screen">
+          <div class="page-title-row">
+            <button class="icon-button" data-back="true" aria-label="Go back">?</button>
+            <h1>Return item</h1>
+          </div>
+
+          <div class="request-item card-surface">
+            <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80" alt="Tripod" />
+            <div>
+              <h3>Tripod</h3>
+              <p>Borrowed Sep 26 � Sep 30</p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <p>Make sure the item is in the same condition as when you received it.</p>
+          </div>
+
+          <div class="upload-box large">
+            <span>+ Add a return photo</span>
+          </div>
+
+          <label>
+            <span>Return location</span>
+            <input type="text" value="Salem" />
+          </label>
+
+          <button class="primary-action full" id="return-submit">Mark as returned</button>
+
+          <div class="success-card hidden" id="return-success">
+            <p class="success-mark">?</p>
+            <h2>Transaction complete</h2>
+            <p>How was your experience?</p>
+            <div class="stars" aria-label="Five star rating">
+              <span>?</span>
+              <span>?</span>
+              <span>?</span>
+              <span>?</span>
+              <span>?</span>
+            </div>
+            <textarea rows="3" placeholder="Optional note"></textarea>
+            <button class="primary-action full" data-target="home-screen">Submit</button>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Mobile navigation">
+        <button class="bottom-nav__item active" data-target="home-screen" aria-label="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 3.5 10.5V20h6.5v-6h4v6h6.5v-9.5L12 3.2Zm0-1.6 9.5 7.5v11.9h-7v-6h-5v6H2.5V9.1L12 1.6Z"/></svg>
+          <span>Home</span>
+        </button>
+
+        <button class="bottom-nav__item" data-target="explore-screen" aria-label="Explore">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15Zm0 2a5.5 5.5 0 1 0 0 11a5.5 5.5 0 0 0 0-11Zm7.71 17.79-4.34-4.34 1.41-1.41 4.34 4.34-1.41 1.41Z"/></svg>
+          <span>Explore</span>
+        </button>
+
+        <button class="bottom-nav__item add-item" data-target="list-screen" aria-label="List item">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v14h-2zm-6 6h14v2H5z"/></svg>
+        </button>
+
+        <button class="bottom-nav__item" data-target="activity-screen" aria-label="Activity">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18.5h2.5l2.2-5.8 3.2 8.1 2.3-5.2H20v2H16.7l-3.2 7.2-3.2-8.1-2.3 6.1H4v-2Zm1-11.5h15v2H5v-2Zm0 4h11v2H5v-2Z"/></svg>
+          <span>Activity</span>
+        </button>
+
+        <button class="bottom-nav__item" data-target="profile-screen" aria-label="Profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0-4-4a4 4 0 0 0 4 4Zm0 2c-4.41 0-8 2.24-8 5v1h16v-1c0-2.76-3.59-5-8-5Z"/></svg>
+          <span>You</span>
+        </button>
+      </nav>
+    </div>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
